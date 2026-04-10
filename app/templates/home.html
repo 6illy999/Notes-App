@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Welcome {{ current_user.username }}</h1>
+
+<h2 align="center">Notes</h2>
+
+<ul class="list-group list-group-flush" >
+    {% for note in notes %}
+    <li class="list-group-item " style="display: flex; justify-content: space-between;">
+        {{ note.body }}
+        <button type="button" class="btn-close" onclick="deleteNote({{note.id}})">
+            <span aria-hidden="true"> </span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+
+<form method='post'>
+     {{ form.hidden_tag() }}
+     <p >
+        {{ form.note(class='form-control' ) }}
+    </p>
+    <p align="center">{{ form.submit(class='btn btn-primary') }}</p>
+</form>
+
+{% endblock %}
