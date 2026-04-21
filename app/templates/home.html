@@ -1,19 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Welcome {{ current_user.username }}</h1>
+<h1 class="welcome-msg">Welcome {{ current_user.username }}</h1>
 
-<h2 align="center">Notes</h2>
+<h2 align="center" style="margin-top: 20px;" class="notes-title">Notes</h2>
 
 <ul class="list-group list-group-flush" >
-    {% for note in notes %}
+    {% for note in notes.items %}
     <li class="list-group-item " style="display: flex; justify-content: space-between;">
-        {{ note.body }}
-        <button type="button" class="btn-close" onclick="deleteNote({{note.id}})">
-            <span aria-hidden="true"> </span>
+        <p class="note-body">{{ note.body }}</p>
+
+        <span class="note-actions">
+            <a href=" {{ url_for('routes.edit_note', note_id=note.id) }}"><button class='btn btn-primary'>Edit Note</button></a>
+            <button type="button" class="btn-close" onclick="deleteNote({{note.id}})">
+                <span aria-hidden="true"> </span>
+            </button>            
+        </span>
+
+        <button class="more-vert">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
+                 <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/>
+            </svg>
         </button>
+
+        <ul class="popup" ">
+            <li><a href=" {{ url_for('routes.edit_note', note_id=note.id) }}" onclick="deleteNote({{note.id}}">Edit Note</a></li>
+            <li><a href="" onclick="deleteNote({{note.id}})">Delete</a></li>
+        </ul>
     </li>
-    {% endfor %}
+    {% endfor %}    
 </ul>
 
 <form method='post'>
@@ -22,6 +37,25 @@
         {{ form.note(class='form-control' ) }}
     </p>
     <p align="center">{{ form.submit(class='btn btn-primary') }}</p>
+    
 </form>
+
+    {% if notes.page != 1 %}
+    <a href=" {{ url_for('routes.home', page=1) }}"><button class='btn btn-primary pagination-btn'>&laquo;</button></a>
+    {% endif %}
+
+    {% if prev_url %}
+    <a href=" {{ prev_url }}"><button class='btn btn-primary pagination-btn'>&lt;</button></a>
+    {% endif %}
+
+    {% if next_url %}
+    <a href=" {{ next_url }}"><button class='btn btn-primary pagination-btn'>&gt;</button></a>
+    {% endif %}
+    
+    {% if notes.page != notes.pages %}
+    <a href=" {{ url_for('routes.home', page=notes.pages) }}"><button class='btn btn-primary pagination-btn'>&raquo;</button></a>
+    {% endif %}
+
+    <p>Page {{ notes.page }} of {{ notes.pages }}</p>
 
 {% endblock %}

@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_migrate import Migrate
 from flask_login import LoginManager
+import app
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -16,6 +17,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'asecretkeystring'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['POSTS_PER_PAGE']  = 5
     db.init_app(app)
 
     migrate.init_app(app, db)

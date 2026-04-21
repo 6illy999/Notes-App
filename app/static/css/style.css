@@ -1,0 +1,65 @@
+.more-vert {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    display: none;
+} 
+
+.note-body {
+    max-width: 70%;
+}
+
+.note-actions {
+        display: flex;
+        gap: 30px;
+    }
+
+.popup {
+    list-style: none;
+    background: rgb(200, 198, 198);
+    color: rgb(15, 14, 14);
+    margin: 0;
+    padding: 15px;
+    position: absolute;
+    top: 31px;
+    right: 27px;
+    z-index: 999;
+    display: none;
+}    
+
+.popup.active {
+    display: block;
+}
+
+@media (max-width:770px) {
+
+    .note-body {
+    max-width: 60%;
+}
+  
+}
+
+@media (max-width:540px) {
+
+    .welcome-msg {
+        text-align: center;
+    }
+
+    .more-vert {
+        display: block;
+    }
+
+    .note-body {
+    max-width: 85%;
+}
+
+    .note-actions {
+        display: none;
+    }
+}
+

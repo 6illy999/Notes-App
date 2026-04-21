@@ -35,3 +35,8 @@ class RegistrationForm(FlaskForm):
 class AddNoteForm(FlaskForm):
     note = TextAreaField(validators=[DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('Add Note')
+
+
+class EditNoteForm(FlaskForm):
+    note = TextAreaField(validators=[DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('Edit Note')    
